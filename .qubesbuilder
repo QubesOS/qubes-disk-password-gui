@@ -1,0 +1,11 @@
+host:
+ rpm:
+   build:
+   - rpm_spec/disk-password-gui.spec
+vm:
+ rpm:
+   build:
+   - rpm_spec/disk-password-gui.spec
+ deb:
+   build:
+   - debian

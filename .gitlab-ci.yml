@@ -1,0 +1,23 @@
+include:
+  - project: 'QubesOS/qubes-continuous-integration'
+    file: '/r4.1/gitlab-base.yml'
+  - project: 'QubesOS/qubes-continuous-integration'
+    file: '/r4.1/gitlab-dom0.yml'
+  - project: 'QubesOS/qubes-continuous-integration'
+    file: '/r4.1/gitlab-vm.yml'
+  - project: 'QubesOS/qubes-continuous-integration'
+    file: '/r4.2/gitlab-base.yml'
+  - project: 'QubesOS/qubes-continuous-integration'
+    file: '/r4.2/gitlab-host.yml'
+  - project: 'QubesOS/qubes-continuous-integration'
+    file: '/r4.2/gitlab-vm.yml'
+
+checks:pylint:
+  before_script:
+  - sudo dnf install -y python3-gobject gtk3  python3-mypy
+#  - pip3 install --quiet -r ci/requirements.txt
+  - mypy --install-types --non-interactive
+  script:
+  - python3 -m pylint --rcfile=.pylintrc change_password_gui
+  - mypy
+  stage: checks

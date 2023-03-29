@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -xe
+dev=/dev/loop0
+pass=def
+truncate -s 100M /home/user/test.img
+losetup $dev /home/user/test.img
+echo -n $pass | cryptsetup luksFormat $dev -
+#echo -n $pass | cryptsetup open --key-file=- $dev luks2
+#vgcreate -f qubes_test2 /dev/mapper/luks2
+#lvcreate -V 500M -l 100%FREE -n root --thin-pool root-pool qubes_test2
+#mkfs.ext4 -F /dev/qubes_test2/root
+#mount /dev/qubes_test2/root /mnt
