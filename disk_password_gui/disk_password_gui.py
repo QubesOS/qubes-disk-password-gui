@@ -19,12 +19,9 @@
 # with this program; if not, see <http://www.gnu.org/licenses/>.
 import sys
 import logging
-from typing import Dict, Union
 
 import pkg_resources
 
-# TODO: broke menu :( right click nope
-# TODO: fix new qube for normal resolution
 
 import pydbus
 
