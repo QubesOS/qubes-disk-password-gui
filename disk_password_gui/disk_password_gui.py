@@ -29,7 +29,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib, Gio, GdkPixbuf
 
-logger = logging.getLogger('qubes-appmenu')
+logger = logging.getLogger('disk-password-gui')
 
 
 def show_error(parent, title, text):
