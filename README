@@ -1,0 +1,6 @@
+-----
+Tests
+-----
+
+Setup-luks and setup-luks2 can be used for manual testing. Python unittests
+test only the graphical widget functionality.
