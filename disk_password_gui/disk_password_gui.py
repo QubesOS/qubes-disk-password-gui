@@ -67,7 +67,7 @@ def show_error(parent, title, text):
 
     dialog.show_all()
 
-    response = dialog.run()
+    dialog.run()
     dialog.destroy()
 
 
@@ -259,7 +259,8 @@ class PasswordGui(Gtk.Application):
 
         try:
             disk_data = self.bus.get(".UDisks2")[
-                'org.freedesktop.DBus.ObjectManager'].GetManagedObjects().items()
+                'org.freedesktop.DBus.ObjectManager']\
+                    .GetManagedObjects().items()
         except GLib.Error:
             self.errors.append("Failed to load device data.")
             disk_data = []
@@ -277,6 +278,8 @@ class PasswordGui(Gtk.Application):
             try:
                 device.ChangePassphrase(old_passphrase, new_passphrase, None)
             except GLib.GError as ex:
+                # pylint is confused about GLib.GError.message
+                # pylint: disable=no-member
                 if 'No keyslot with given passphrase found.' in ex.message:
                     self.errors.append(
                         "No matching encrypted disk found."
