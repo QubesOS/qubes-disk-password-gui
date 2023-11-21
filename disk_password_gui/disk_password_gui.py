@@ -289,6 +289,7 @@ class PasswordGui(Gtk.Application):
             except Exception as ex:  # pylint: disable=broad-except
                 self.errors.append(str(ex))
 
+        assert self.busy_dialog is not None
         self.busy_dialog.hide()
         GLib.idle_add(self._busy_ended)
 
