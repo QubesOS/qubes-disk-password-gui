@@ -1,3 +1,10 @@
+disk-password-gui (1.0.0-1) unstable; urgency=medium
+
+  [ Marta Marczykowska-Górecka ]
+  * 
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Tue, 21 Nov 2023 11:22:02 +0100
+
 disk-password-gui (0.1-1) unstable; urgency=low
 
   * Initial release 
