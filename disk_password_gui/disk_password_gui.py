@@ -20,7 +20,7 @@
 import sys
 import logging
 
-import pkg_resources
+import importlib.resources
 
 
 import pydbus
@@ -95,14 +95,26 @@ def load_icon(icon_name: str, width: int = 24, height: int = 24):
             return pixbuf
 
 
-def load_theme(widget: Gtk.Widget, light_theme_path: str, dark_theme_path: str):
+def load_theme(widget: Gtk.Widget,
+               package_name: str,
+               light_file_name: str,
+               dark_file_name: str):
     """
     Load a dark or light theme to current screen, based on widget's
-    current (system) defaults. Taken from qubes-desktop-linux-manager.
+    current (system) defaults.
     :param widget: Gtk.Widget, preferably main window
-    :param light_theme_path: path to file with light theme css
-    :param dark_theme_path: path to file with dark theme css
+    :param package_name: name of the package
+    :param light_file_name: name of the css file with light theme
+    :param dark_file_name: name of the css file with dark theme
     """
+    light_css_path = importlib.resources.files(package_name) / light_file_name
+    with importlib.resources.as_file(light_css_path) as resource_path:
+        light_theme_path = str(resource_path)
+
+    dark_css_path = importlib.resources.files(package_name) / dark_file_name
+    with importlib.resources.as_file(dark_css_path) as resource_path:
+        dark_theme_path = str(resource_path)
+
     path = light_theme_path if is_theme_light(widget) else dark_theme_path
 
     screen = Gdk.Screen.get_default()
@@ -148,8 +160,10 @@ class PasswordGui(Gtk.Application):
         # pylint: disable=attribute-defined-outside-init
         self.builder = Gtk.Builder()
 
-        self.builder.add_from_file(pkg_resources.resource_filename(
-            'disk_password_gui', 'disk_password_gui.glade'))
+        glade_ref = importlib.resources.files(
+            __name__).joinpath('disk_password_gui.glade')
+        with importlib.resources.as_file(glade_ref) as path:
+            self.builder.add_from_file(str(path))
 
         self.main_window: Gtk.Window = self.builder.get_object('main_window')
         self.current_pwd: Gtk.Entry = self.builder.get_object('current_pwd')
@@ -190,10 +204,9 @@ class PasswordGui(Gtk.Application):
                               text="Changing encryption password...")
 
         load_theme(widget=self.main_window,
-                   light_theme_path=pkg_resources.resource_filename(
-                       'disk_password_gui', 'disk_password_gui_light.css'),
-                   dark_theme_path=pkg_resources.resource_filename(
-                       'disk_password_gui', 'disk_password_gui_dark.css'))
+                   package_name="disk_password_gui",
+                   light_file_name='disk_password_gui_light.css',
+                   dark_file_name='disk_password_gui_dark.css')
 
         screen = Gdk.Screen.get_default()
         keymap = Gdk.Keymap.get_for_display(screen.get_display())
