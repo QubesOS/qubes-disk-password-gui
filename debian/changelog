@@ -1,3 +1,10 @@
+disk-password-gui (1.0.1-1) unstable; urgency=medium
+
+  [ Marta Marczykowska-Górecka ]
+  * Remove deprecated pkg_resources
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Sat, 20 Jul 2024 02:52:21 +0200
+
 disk-password-gui (1.0.0-1) unstable; urgency=medium
 
   [ Marta Marczykowska-Górecka ]
